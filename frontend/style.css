@@ -1,0 +1,120 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: #fff;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+h1 {
+  margin-bottom: 25px;
+}
+
+.card {
+  background: #1b1b1b;
+  border: 1px solid #2c2c2c;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.form-inline,
+.herramientas,
+.paginacion {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+input,
+select {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #555;
+  min-width: 220px;
+}
+
+button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  background: #0d6efd;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0b5ed7;
+}
+
+button:disabled {
+  background: #666;
+  cursor: not-allowed;
+}
+
+#mensaje {
+  margin-top: 18px;
+  font-weight: bold;
+}
+
+.estado-sesion {
+  margin-bottom: 20px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.estado-sesion.no-session {
+  background: #3f1515;
+  color: #ffb3b3;
+}
+
+.estado-sesion.session-on {
+  background: #123a1f;
+  color: #9df0b3;
+}
+
+#listaUsuarios {
+  list-style: none;
+  padding: 0;
+  margin-top: 18px;
+}
+
+#listaUsuarios li {
+  background: #f1f1f1;
+  color: #111;
+  margin-bottom: 12px;
+  padding: 14px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .form-inline,
+  .herramientas,
+  .paginacion {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #listaUsuarios li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  input,
+  select,
+  button {
+    width: 100%;
+  }
+}
+

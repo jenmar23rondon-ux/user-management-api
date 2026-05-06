@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestión de Usuarios</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Gestión de Usuarios</h1>
+
+    <div id="estadoSesion" class="estado-sesion"></div>
+
+    <section class="card">
+      <h2>Iniciar sesión</h2>
+      <form id="formLogin" class="form-inline">
+        <input type="email" id="loginEmail" placeholder="Correo electrónico" required />
+        <input type="password" id="loginPassword" placeholder="Contraseña" required />
+        <button type="submit">Iniciar sesión</button>
+        <button type="button" id="btnLogout">Cerrar sesión</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Registrar usuario auth</h2>
+      <form id="formRegister" class="form-inline">
+        <input type="email" id="registerEmail" placeholder="Correo electrónico" required />
+        <input type="password" id="registerPassword" placeholder="Contraseña" required />
+        <button type="submit">Registrar</button>
+      </form>
+    </section>
+
+    <section id="crudSection" class="card">
+      <h2>CRUD de usuarios</h2>
+
+      <div class="herramientas">
+        <input type="text" id="buscarNombre" placeholder="Buscar por nombre" />
+        <select id="ordenNombre">
+          <option value="asc">Orden A-Z</option>
+          <option value="desc">Orden Z-A</option>
+        </select>
+      </div>
+
+      <form id="formUsuario" class="form-inline">
+        <input type="text" id="nombre" placeholder="Nombre" required />
+        <input type="number" id="edad" placeholder="Edad" required />
+        <button type="submit" id="btnSubmit">Crear</button>
+      </form>
+
+      <ul id="listaUsuarios"></ul>
+
+      <div class="paginacion">
+        <button type="button" id="btnAnterior">Anterior</button>
+        <span id="paginaInfo">Página 1</span>
+        <button type="button" id="btnSiguiente">Siguiente</button>
+      </div>
+    </section>
+
+    <p id="mensaje"></p>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
