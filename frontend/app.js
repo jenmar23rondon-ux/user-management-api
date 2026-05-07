@@ -1,6 +1,8 @@
-const API_URL = "http://localhost:3000/usuarios";
-const LOGIN_URL = "http://localhost:3000/auth/login";
-const REGISTER_URL = "http://localhost:3000/auth/register";
+const BASE_URL = "https://mi-proyecto-backend-production-a929.up.railway.app";
+
+const API_URL = `${BASE_URL}/usuarios`;
+const LOGIN_URL = `${BASE_URL}/auth/login`;
+const REGISTER_URL = `${BASE_URL}/auth/register`;
 
 // Auth
 const formLogin = document.getElementById("formLogin");
