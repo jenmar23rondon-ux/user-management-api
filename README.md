@@ -1,72 +1,72 @@
 # mi-proyecto-backend
 
-API REST de usuarios construida con **Node.js**, **Express** y **PostgreSQL**, con autenticación JWT, seguridad con Helmet y control de acceso por roles.
+A REST API for user management built with **Node.js**, **Express** and **PostgreSQL**, featuring JWT authentication, role-based access control, and production-ready security middleware.
 
 ---
 
-## Tecnologías
+## Tech Stack
 
-| Tecnología | Uso |
+| Technology | Purpose |
 |---|---|
-| Node.js + Express | Servidor y rutas |
-| PostgreSQL + pg | Base de datos |
-| JWT (jsonwebtoken) | Autenticación |
-| bcrypt | Hash de contraseñas |
-| Helmet | Seguridad HTTP |
-| CORS | Control de orígenes |
-| express-rate-limit | Límite de peticiones |
-| dotenv | Variables de entorno |
+| Node.js + Express | Server and routing |
+| PostgreSQL + pg | Database |
+| JWT (jsonwebtoken) | Authentication |
+| bcrypt | Password hashing |
+| Helmet | HTTP security headers |
+| CORS | Cross-origin resource sharing |
+| express-rate-limit | Request throttling |
+| dotenv | Environment variables |
 
 ---
 
-## Estructura del proyecto
+## Project Structure
 
 ```
 mi-proyecto-backend/
 ├── config/
-│   └── db.js                  # Conexión al pool de PostgreSQL
+│   └── db.js                  # PostgreSQL connection pool
 ├── controllers/
-│   ├── auth.controller.js     # Lógica de registro y login
-│   └── usuarios.controller.js # CRUD de usuarios
+│   ├── auth.controller.js     # Register and login logic
+│   └── usuarios.controller.js # User CRUD operations
 ├── database/
-│   └── schema.sql             # Script de creación de tablas
+│   └── schema.sql             # Database schema and indexes
 ├── middlewares/
-│   └── auth.middleware.js     # Verificación de JWT
+│   └── auth.middleware.js     # JWT verification middleware
 ├── routes/
-│   ├── auth.routes.js         # Rutas de autenticación
-│   └── usuarios.routes.js     # Rutas de usuarios
+│   ├── auth.routes.js         # Authentication routes
+│   └── usuarios.routes.js     # User routes
 ├── utils/
-│   └── auditoria.js           # Registro de auditoría
-├── frontend/                  # Archivos estáticos del cliente
-├── server.js                  # Punto de entrada principal
-├── .env.example               # Plantilla de variables de entorno
+│   └── auditoria.js           # Audit log helper
+├── frontend/                  # Static client files
+├── server.js                  # Application entry point
+├── .env.example               # Environment variables template
 └── package.json
 ```
 
 ---
 
-## Instalación local
+## Getting Started
 
-### 1. Clonar el repositorio
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/jenmar23rondon-ux/mi-proyecto-backend.git
 cd mi-proyecto-backend
 ```
 
-### 2. Instalar dependencias
+### 2. Install dependencies
 
 ```bash
 npm install
 ```
 
-### 3. Configurar variables de entorno
+### 3. Set up environment variables
 
 ```bash
 cp .env.example .env
 ```
 
-Edita el archivo `.env` con tus valores:
+Fill in your values in `.env`:
 
 ```env
 PORT=3000
@@ -74,64 +74,64 @@ PORT=3000
 DB_USER=postgres
 DB_HOST=localhost
 DB_NAME=mi_app
-DB_PASSWORD=tu_password
+DB_PASSWORD=your_password
 DB_PORT=5432
 
-JWT_SECRET=genera_uno_con_openssl_rand_-hex_64
+JWT_SECRET=your_long_random_secret
 ALLOWED_ORIGINS=http://127.0.0.1:5500,http://localhost:5500
 ```
 
-> Genera un JWT_SECRET seguro con:
+> Generate a secure JWT_SECRET with:
 > ```bash
 > node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
 > ```
 
-### 4. Crear la base de datos
+### 4. Set up the database
 
 ```bash
 psql -U postgres -c "CREATE DATABASE mi_app;"
 psql -U postgres -d mi_app -f database/schema.sql
 ```
 
-### 5. Iniciar el servidor
+### 5. Run the server
 
 ```bash
-# Produccion
+# Production
 npm start
 
-# Desarrollo (recarga automatica)
+# Development (auto-reload)
 npm run dev
 ```
 
-El servidor estara disponible en `http://localhost:3000`
+Server will be available at `http://localhost:3000`
 
 ---
 
-## Endpoints
+## API Endpoints
 
-### Autenticacion
+### Authentication
 
-| Metodo | Ruta | Descripcion | Auth |
-|--------|------|-------------|------|
-| POST | `/auth/register` | Registrar nuevo usuario | No |
-| POST | `/auth/login` | Iniciar sesion | No |
+| Method | Route | Description | Auth required |
+|--------|-------|-------------|---------------|
+| POST | `/auth/register` | Register a new account | No |
+| POST | `/auth/login` | Log in and get a token | No |
 
 #### POST /auth/register
 ```json
 {
-  "email": "usuario@ejemplo.com",
-  "password": "MiPass123"
+  "email": "user@example.com",
+  "password": "MyPass123"
 }
 ```
 
 #### POST /auth/login
 ```json
 {
-  "email": "usuario@ejemplo.com",
-  "password": "MiPass123"
+  "email": "user@example.com",
+  "password": "MyPass123"
 }
 ```
-**Respuesta:**
+**Response:**
 ```json
 {
   "token": "eyJhbGciOiJIUzI1NiIs...",
@@ -141,77 +141,75 @@ El servidor estara disponible en `http://localhost:3000`
 
 ---
 
-### Usuarios
+### Users
 
-> Todos los endpoints de usuarios requieren el header:
+> All user endpoints require the header:
 > `Authorization: Bearer <token>`
 
-| Metodo | Ruta | Descripcion |
-|--------|------|-------------|
-| GET | `/usuarios` | Listar todos los usuarios |
-| GET | `/usuarios/:id` | Obtener un usuario por ID |
-| POST | `/usuarios` | Crear un usuario |
-| PUT | `/usuarios/:id` | Actualizar un usuario |
-| DELETE | `/usuarios/:id` | Eliminar un usuario |
+| Method | Route | Description |
+|--------|-------|-------------|
+| GET | `/usuarios` | List all users |
+| GET | `/usuarios/:id` | Get a user by ID |
+| POST | `/usuarios` | Create a new user |
+| PUT | `/usuarios/:id` | Update a user |
+| DELETE | `/usuarios/:id` | Delete a user |
 
-#### POST /usuarios
+#### POST /usuarios — Request body
 ```json
 {
-  "nombre": "Juan Perez",
+  "nombre": "John Doe",
   "edad": 30
 }
 ```
 
 ---
 
-## Seguridad implementada
+## Security Features
 
-- **JWT** con expiracion de 7 dias
-- **bcrypt** para hash de contrasenas (salt rounds: 10)
-- **Helmet** con Content Security Policy activado
-- **CORS** con lista blanca de origenes configurables
-- **Rate limiting**: maximo 100 peticiones cada 15 minutos
-- **Auditoria**: registro de acciones en base de datos
-- **Validacion**: contrasena minimo 8 caracteres, con letras y numeros
-- **Payload limitado**: maximo 10kb por peticion
+- **JWT** authentication with 7-day expiration
+- **bcrypt** password hashing (10 salt rounds)
+- **Helmet** with Content Security Policy enabled
+- **CORS** with configurable origin whitelist
+- **Rate limiting**: max 100 requests per 15 minutes
+- **Audit log**: all actions recorded in the database
+- **Input validation**: password requires min. 8 chars with letters and numbers
+- **Payload limit**: max 10kb per request
 
 ---
 
-## Base de datos
+## Database Schema
 
-### Tablas
-
-**`usuarios`** — Datos de los usuarios
+**`usuarios`** — Application users
 ```sql
 id, nombre, edad, created_at, updated_at
 ```
 
-**`auth_users`** — Credenciales de autenticacion
+**`auth_users`** — Authentication credentials
 ```sql
 id, email, password, role (user | admin), created_at
 ```
 
-**`auditoria`** — Registro de acciones
+**`auditoria`** — Action audit log
 ```sql
 id, usuario_email, accion, creado_en
 ```
 
 ---
 
-## Despliegue en Railway
+## Deployment
 
-Este proyecto esta desplegado en [Railway](https://railway.app).
+This project is deployed on [Railway](https://railway.app).
 
-Variables de entorno requeridas en Railway:
+Required environment variables on Railway:
 ```
 DATABASE_URL=postgresql://...
 JWT_SECRET=...
-ALLOWED_ORIGINS=https://tu-frontend.vercel.app
+ALLOWED_ORIGINS=https://your-frontend.vercel.app
 NODE_ENV=production
 ```
 
 ---
 
-## Autor
+## Author
 
 **Arcangel Rondon** — [@jenmar23rondon-ux](https://github.com/jenmar23rondon-ux)
