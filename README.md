@@ -212,4 +212,4 @@ NODE_ENV=production
 
 ## Author
 
-**Arcangel Rondon** — [@jenmar23rondon-ux](https://github.com/jenmar23rondon-ux)
+**Jenmar Rondon** — [@jenmar23rondon-ux](https://github.com/jenmar23rondon-ux)
