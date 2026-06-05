@@ -43,7 +43,7 @@ A secure user management project built with Node.js, Express, PostgreSQL and JWT
 ## Project Structure
 
 ```text
-mi-proyecto-backend/
+user-management-api/
 |-- config/
 |   `-- db.js
 |-- controllers/
@@ -165,4 +165,4 @@ Stores audit records for important actions, such as authentication and user mana
 Built by Jenmar Rondon.
 
 - GitHub: [jenmar23rondon-ux](https://github.com/jenmar23rondon-ux)
-- Repository: [mi-proyecto-backend](https://github.com/jenmar23rondon-ux/mi-proyecto-backend)
+- Repository: [user-management-api](https://github.com/jenmar23rondon-ux/user-management-api)

@@ -1,5 +1,5 @@
 {
-  "name": "api-usuarios",
+  "name": "user-management-api",
   "version": "1.0.0",
   "description": "API REST de usuarios con Node.js, Express, PostgreSQL y JWT",
   "main": "server.js",
