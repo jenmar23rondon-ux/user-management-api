@@ -1,215 +1,168 @@
-# mi-proyecto-backend
+# User Management API
 
-A REST API for user management built with **Node.js**, **Express** and **PostgreSQL**, featuring JWT authentication, role-based access control, and production-ready security middleware.
+A secure user management project built with Node.js, Express, PostgreSQL and JWT authentication. It includes a REST API, role-based access control, audit logging, security middleware and a small frontend interface to test authentication and CRUD operations.
 
----
+## Screenshots
+
+### Authenticated user dashboard
+
+<img src="docs/screenshots/user-management-page-1.png" alt="Authenticated user management dashboard with CRUD list page 1" width="900" />
+
+### Paginated user list
+
+<img src="docs/screenshots/user-management-page-2.png" alt="Authenticated user management dashboard with CRUD list page 2" width="900" />
+
+### Logged out state
+
+<img src="docs/screenshots/logged-out-state.png" alt="Logged out state showing login and registration forms" width="900" />
+
+## Features
+
+- User registration and login with JWT authentication.
+- Protected user CRUD endpoints.
+- Role-based authorization middleware.
+- PostgreSQL database with relational tables.
+- Password hashing with bcrypt.
+- Search, ordering and pagination in the frontend.
+- Audit table for tracking important user actions.
+- Security middleware with Helmet, CORS and rate limiting.
+- Static frontend included for testing the API from the browser.
 
 ## Tech Stack
 
-| Technology | Purpose |
-|---|---|
-| Node.js + Express | Server and routing |
-| PostgreSQL + pg | Database |
-| JWT (jsonwebtoken) | Authentication |
-| bcrypt | Password hashing |
-| Helmet | HTTP security headers |
-| CORS | Cross-origin resource sharing |
-| express-rate-limit | Request throttling |
-| dotenv | Environment variables |
-
----
+- Node.js
+- Express.js
+- PostgreSQL
+- JWT
+- bcrypt
+- Helmet
+- CORS
+- express-rate-limit
+- HTML, CSS and JavaScript frontend
 
 ## Project Structure
 
-```
+```text
 mi-proyecto-backend/
-├── config/
-│   └── db.js                  # PostgreSQL connection pool
-├── controllers/
-│   ├── auth.controller.js     # Register and login logic
-│   └── usuarios.controller.js # User CRUD operations
-├── database/
-│   └── schema.sql             # Database schema and indexes
-├── middlewares/
-│   └── auth.middleware.js     # JWT verification middleware
-├── routes/
-│   ├── auth.routes.js         # Authentication routes
-│   └── usuarios.routes.js     # User routes
-├── utils/
-│   └── auditoria.js           # Audit log helper
-├── frontend/                  # Static client files
-├── server.js                  # Application entry point
-├── .env.example               # Environment variables template
-└── package.json
+|-- config/
+|   `-- db.js
+|-- controllers/
+|   |-- auth.controller.js
+|   `-- usuarios.controller.js
+|-- database/
+|   `-- schema.sql
+|-- frontend/
+|   |-- app.js
+|   |-- index.html
+|   `-- style.css
+|-- middlewares/
+|   |-- auth.middleware.js
+|   `-- role.middleware.js
+|-- routes/
+|   |-- auth.routes.js
+|   `-- usuarios.routes.js
+|-- utils/
+|   `-- auditoria.js
+|-- docs/
+|   `-- screenshots/
+|-- package.json
+|-- server.js
+`-- README.md
 ```
-
----
 
 ## Getting Started
 
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/jenmar23rondon-ux/mi-proyecto-backend.git
-cd mi-proyecto-backend
-```
-
-### 2. Install dependencies
+### 1. Install dependencies
 
 ```bash
 npm install
 ```
 
-### 3. Set up environment variables
+### 2. Configure environment variables
 
-```bash
-cp .env.example .env
-```
-
-Fill in your values in `.env`:
+Create a `.env` file in the project root:
 
 ```env
 PORT=3000
-
 DB_USER=postgres
 DB_HOST=localhost
 DB_NAME=mi_app
 DB_PASSWORD=your_password
 DB_PORT=5432
-
-JWT_SECRET=your_long_random_secret
+JWT_SECRET=your_long_secure_secret
 ALLOWED_ORIGINS=http://127.0.0.1:5500,http://localhost:5500
+NODE_ENV=development
 ```
 
-> Generate a secure JWT_SECRET with:
-> ```bash
-> node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
-> ```
+### 3. Create the database tables
 
-### 4. Set up the database
+Run the SQL schema against your PostgreSQL database:
 
 ```bash
-psql -U postgres -c "CREATE DATABASE mi_app;"
 psql -U postgres -d mi_app -f database/schema.sql
 ```
 
-### 5. Run the server
+### 4. Start the backend
 
 ```bash
-# Production
-npm start
-
-# Development (auto-reload)
 npm run dev
 ```
 
-Server will be available at `http://localhost:3000`
+The API will run at:
 
----
+```text
+http://localhost:3000
+```
+
+### 5. Open the frontend
+
+Open `frontend/index.html` with Live Server or another static server.
 
 ## API Endpoints
 
 ### Authentication
 
-| Method | Route | Description | Auth required |
-|--------|-------|-------------|---------------|
-| POST | `/auth/register` | Register a new account | No |
-| POST | `/auth/login` | Log in and get a token | No |
-
-#### POST /auth/register
-```json
-{
-  "email": "user@example.com",
-  "password": "MyPass123"
-}
-```
-
-#### POST /auth/login
-```json
-{
-  "email": "user@example.com",
-  "password": "MyPass123"
-}
-```
-**Response:**
-```json
-{
-  "token": "eyJhbGciOiJIUzI1NiIs...",
-  "expiresIn": "7d"
-}
-```
-
----
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| POST | `/auth/register` | Register an authentication user |
+| POST | `/auth/login` | Login and receive a JWT token |
 
 ### Users
 
-> All user endpoints require the header:
-> `Authorization: Bearer <token>`
-
-| Method | Route | Description |
-|--------|-------|-------------|
-| GET | `/usuarios` | List all users |
-| GET | `/usuarios/:id` | Get a user by ID |
-| POST | `/usuarios` | Create a new user |
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| GET | `/usuarios` | List users |
+| POST | `/usuarios` | Create a user |
 | PUT | `/usuarios/:id` | Update a user |
 | DELETE | `/usuarios/:id` | Delete a user |
 
-#### POST /usuarios — Request body
-```json
-{
-  "nombre": "John Doe",
-  "edad": 30
-}
-```
+## Database Tables
 
----
+### `usuarios`
 
-## Security Features
+Stores application users managed through CRUD operations.
 
-- **JWT** authentication with 7-day expiration
-- **bcrypt** password hashing (10 salt rounds)
-- **Helmet** with Content Security Policy enabled
-- **CORS** with configurable origin whitelist
-- **Rate limiting**: max 100 requests per 15 minutes
-- **Audit log**: all actions recorded in the database
-- **Input validation**: password requires min. 8 chars with letters and numbers
-- **Payload limit**: max 10kb per request
+### `auth_users`
 
----
+Stores authentication accounts with hashed passwords and roles.
 
-## Database Schema
+### `auditoria`
 
-**`usuarios`** — Application users
-```sql
-id, nombre, edad, created_at, updated_at
-```
+Stores audit records for important actions, such as authentication and user management events.
 
-**`auth_users`** — Authentication credentials
-```sql
-id, email, password, role (user | admin), created_at
-```
+## Security Highlights
 
-**`auditoria`** — Action audit log
-```sql
-id, usuario_email, accion, creado_en
-```
-
----
-
-## Deployment
-
-This project is deployed on [Railway](https://railway.app).
-
-Required environment variables on Railway:
-```
-DATABASE_URL=postgresql://...
-JWT_SECRET=...
-ALLOWED_ORIGINS=https://your-frontend.vercel.app
-NODE_ENV=production
-```
-
----
+- Passwords are hashed using bcrypt.
+- JWT is required for protected routes.
+- Role middleware separates normal users from privileged actions.
+- Helmet adds secure HTTP headers.
+- CORS restricts allowed frontend origins.
+- Rate limiting helps reduce brute-force and abuse attempts.
+- JSON payload size is limited to reduce unnecessary exposure.
 
 ## Author
 
-**Jenmar Rondon** — [@jenmar23rondon-ux](https://github.com/jenmar23rondon-ux)
+Built by Jenmar Rondon.
+
+- GitHub: [jenmar23rondon-ux](https://github.com/jenmar23rondon-ux)
+- Repository: [mi-proyecto-backend](https://github.com/jenmar23rondon-ux/mi-proyecto-backend)
